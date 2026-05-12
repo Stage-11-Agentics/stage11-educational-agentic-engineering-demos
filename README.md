@@ -10,49 +10,13 @@ This is what we actually run, every day. Not a sanitized demo. The files in this
 
 | Artifact | What it is |
 |---|---|
-| [`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) | One operator's global `~/.claude/CLAUDE.md`. Loads into every Claude Code session on the machine. The headline pattern: language overloading. |
 | [`commands/trident-code-review.md`](commands/trident-code-review.md) | Nine-reviewer multi-model code review. Claude + Codex + Gemini, three lenses each, four parallel synthesizers, one validated machine-actionable fix plan. |
 | [`commands/trident-plan-review.md`](commands/trident-plan-review.md) | Same shape as trident code review, pointed at a plan or design document instead of a diff. |
 | [`commands/code_review.md`](commands/code_review.md), [`commands/code_review_critical.md`](commands/code_review_critical.md) | Single-agent review prompts the trident commands compose. |
-| [`commands/capture-skill.md`](commands/capture-skill.md) | Extract reusable knowledge from a conversation into a `CLAUDE.md` file or a new slash command. The flywheel for a self-improving codebase. |
 | [`agents/`](agents/) | Markdown prompt files that the trident commands invoke as sub-agent definitions. Just markdown, but Claude Code reads them from `~/.claude/agents/` when its Agent tool spawns sub-agents, so they live there once installed. |
+| [`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) | One operator's global `~/.claude/CLAUDE.md`. Loads into every Claude Code session on the machine. The headline pattern: language overloading. |
+| [`commands/capture-skill.md`](commands/capture-skill.md) | Extract reusable knowledge from a conversation into a `CLAUDE.md` file or a new slash command. The flywheel for a self-improving codebase. |
 | [`skills/lattice-delegate/SKILL.md`](skills/lattice-delegate/SKILL.md) | Orchestrator + delegator pattern for end-to-end ticket execution. Assumes [c11](https://github.com/Stage-11-Agentics/c11) and [Lattice](https://github.com/Stage-11-Agentics/lattice). |
-
-────
-
-## The CLAUDE.md File: Atin's Global Example
-
-[`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) is the most portable artifact in this repo. Read it first.
-
-A global `CLAUDE.md` lives at `~/.claude/CLAUDE.md` and loads into every Claude Code session on the machine, before the operator types a word. It is the contract between the operator and the agents they work with: vocabulary, defaults, escalation rules, the patterns the operator wants the agents to apply by reflex.
-
-The headline pattern is **language overloading**. Single-word triggers that invoke specific agent behaviors. Defined once, used everywhere.
-
-| Trigger | Behavior |
-|---|---|
-| `clear` | Spawn a fresh, headless agent with isolated context |
-| `loopy` | Drive a full validation loop. Implement, validate, iterate until actually done. |
-| `dialogue` | Pause and ask every question needed before building |
-| `full force` | Parallel Claude + Codex analysis, merged into one document |
-| `triple force` | Parallel Claude + Codex + Gemini analysis, merged |
-| `ultrathink` | Spend extra reasoning on edge cases and side effects before acting |
-| `ralph` | Launch an autonomous loop that runs until the task is complete |
-
-These are the most under-discussed leverage points in agentic engineering. Defined once in a global file, they collapse the cost of explaining what you want from a paragraph to a word. The agent enters a different mode. Misunderstanding drops. Throughput rises.
-
-The full file goes deeper: bias-toward-action heuristics, the two patterns for spawning sub-agents (interactive vs. headless), parallelization defaults, the auto-commit and auto-push policy, dialogue-driven development, thrashing detection, AskUserQuestion best practices.
-
-Treat it as a reference implementation. Steal the table. Steal the structure. Build your own vocabulary on top.
-
-**Install:**
-
-```bash
-# Back up your existing global CLAUDE.md if you have one
-cp ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak 2>/dev/null
-
-# Copy this one in (or merge it with yours)
-cp atins-global-claude-md-example.md ~/.claude/CLAUDE.md
-```
 
 ────
 
@@ -155,6 +119,39 @@ cp agents/PlanReview-Evolutionary.md  ~/.claude/agents/
 
 # Optional Codex hardlinks
 ln ~/.claude/commands/trident-plan-review.md ~/.codex/prompts/trident-plan-review.md 2>/dev/null
+```
+
+────
+
+## The CLAUDE.md File: Atin's Global Example
+
+[`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) is the operator-level pattern layer. Study it to see how language overloading and standing instructions frame every Claude Code session on the machine.
+
+A global `CLAUDE.md` lives at `~/.claude/CLAUDE.md` and loads into every Claude Code session, before the operator types a word. It is the contract between the operator and the agents they work with: vocabulary, defaults, escalation rules, the patterns the operator wants the agents to apply by reflex.
+
+The headline pattern is **language overloading**. Single-word triggers that invoke specific agent behaviors. Defined once, used everywhere.
+
+| Trigger | Behavior |
+|---|---|
+| `clear` | Spawn a fresh, headless agent with isolated context |
+| `new instance` | Launch a Claude Code session in a new c11 pane |
+| `loopy` | Drive a full validation loop. Implement, validate, iterate until actually done. |
+| `dialogue` | Pause and ask every question needed before building |
+
+These are the most under-discussed leverage points in agentic engineering. Defined once in a global file, they collapse the cost of explaining what you want from a paragraph to a word. The agent enters a different mode. Misunderstanding drops. Throughput rises.
+
+The full file goes deeper: clear-agent launching, loopy validation, dialogue-driven development, parallelization defaults, the c11 workspace assumption, the auto-commit and auto-push policy, environment confirmation, AskUserQuestion best practices, thrashing detection, and a self-improvement habit for keeping `CLAUDE.md` current.
+
+Treat it as a reference implementation. Steal the table. Steal the structure. Build your own vocabulary on top.
+
+**Install:**
+
+```bash
+# Back up your existing global CLAUDE.md if you have one
+cp ~/.claude/CLAUDE.md ~/.claude/CLAUDE.md.bak 2>/dev/null
+
+# Copy this one in (or merge it with yours)
+cp atins-global-claude-md-example.md ~/.claude/CLAUDE.md
 ```
 
 ────

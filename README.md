@@ -16,13 +16,12 @@ This is what we actually run, every day. Not a sanitized demo. The files in this
 | [`agents/`](agents/) | Markdown prompt files that the trident commands invoke as sub-agent definitions. Just markdown, but Claude Code reads them from `~/.claude/agents/` when its Agent tool spawns sub-agents, so they live there once installed. |
 | [`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) | One operator's global `~/.claude/CLAUDE.md`. Loads into every Claude Code session on the machine. The headline pattern: language overloading. |
 | [`commands/capture-skill.md`](commands/capture-skill.md) | Extract reusable knowledge from a conversation into a `CLAUDE.md` file or a new slash command. The flywheel for a self-improving codebase. |
-| [`skills/lattice-delegate/SKILL.md`](skills/lattice-delegate/SKILL.md) | Orchestrator + delegator pattern for end-to-end ticket execution. Assumes [c11](https://github.com/Stage-11-Agentics/c11) and [Lattice](https://github.com/Stage-11-Agentics/lattice). |
 
 ────
 
 ## Trident Code Review
 
-The flagship workflow. Spawns nine reviewers across three providers and three lenses, then four parallel synthesizers, in one slash command.
+The flagship code review workflow. Significantly outperforms any off-the-shelf solution by an order of magnitude, due to the intense usage of nine different reviewers across three providers using three different code review prompts. Four parallel synthesizers consolidate the output into one machine-actionable fix plan, all from a single slash command.
 
 ```
 trident-code-review
@@ -125,7 +124,7 @@ ln ~/.claude/commands/trident-plan-review.md ~/.codex/prompts/trident-plan-revie
 
 ## The CLAUDE.md File: Atin's Global Example
 
-[`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) is the operator-level pattern layer. Study it to see how language overloading and standing instructions frame every Claude Code session on the machine.
+[`atins-global-claude-md-example.md`](atins-global-claude-md-example.md) is Atin's publishable pattern that influences all of his agentic coding. It may provide some interesting examples and useful tools for you.
 
 A global `CLAUDE.md` lives at `~/.claude/CLAUDE.md` and loads into every Claude Code session, before the operator types a word. It is the contract between the operator and the agents they work with: vocabulary, defaults, escalation rules, the patterns the operator wants the agents to apply by reflex.
 
@@ -174,41 +173,11 @@ cp commands/capture-skill.md ~/.claude/commands/
 
 ────
 
-## Lattice-Delegate
-
-The pattern for taking a single ticket from "this needs to ship" to "this is shipped" without the operator in the loop for every step.
-
-```
-Operator pane (Orchestrator)
-└── spawns ── Delegator pane
-              ├── Plan sub-agent
-              ├── Impl sub-agent
-              ├── Translator sub-agent (when localized strings change)
-              ├── Review sub-agent (typically invokes trident)
-              ├── Validate sub-agent
-              └── PR
-```
-
-The orchestrator stays with the operator and watches for status transitions. The delegator drives the work and is the operator's interface to the ticket. Each phase runs in its own sibling pane so the operator can scrub any phase from one vertical slice. All code work happens inside an isolated git worktree. All coordination flows through Lattice as the comms bus.
-
-The failure modes of long-running autonomous work are mostly coordination failures. Sub-agents go silent. Status doesn't update. The operator doesn't know the work needs them until they ask. The delegator pattern bakes the discipline into the structure: status transitions are mandatory, the orchestrator polls actively, every phase ends with a Lattice comment.
-
-**Prerequisites:** [c11](https://github.com/Stage-11-Agentics/c11) and [Lattice](https://github.com/Stage-11-Agentics/lattice). Both are open-source Stage 11 projects. Without that stack the SKILL.md is still useful as a reference for structuring an orchestrator + delegator pattern in your own environment.
-
-**Install** (only meaningful with c11 + Lattice running):
-
-```bash
-mkdir -p ~/.claude/skills/lattice-delegate
-cp skills/lattice-delegate/SKILL.md ~/.claude/skills/lattice-delegate/
-```
-
-────
-
 ## Adapt, Don't Copy Wholesale
 
 The patterns transfer. The specifics often don't.
 
-The global `CLAUDE.md` was shaped by one operator's actual work. Some triggers will land in your context. Others won't. The trident review prompts assume a particular review aesthetic, terse, lens-aware, action-synthesizing. Your team might want a different cut. The lattice-delegate skill assumes c11 panes and Lattice tickets. The underlying pattern (orchestrator + delegator + isolated worktree + shared comms bus) holds without that stack. The implementation will look different.
+The global `CLAUDE.md` was shaped by one operator's actual work. Some triggers will land in your context. Others won't. The trident review prompts assume a particular review aesthetic, terse, lens-aware, action-synthesizing. Your team might want a different cut. The underlying patterns transfer; the implementation will look different.
 
 Read the files. Understand the shape. Build your own.
 
@@ -220,8 +189,8 @@ Read the files. Understand the shape. Build your own.
 
 The Stage 11 projects most relevant to this repo:
 
-- [**c11**](https://github.com/Stage-11-Agentics/c11). Native macOS terminal multiplexer; the workspace environment the lattice-delegate skill assumes.
-- [**Lattice**](https://github.com/Stage-11-Agentics/lattice). File-based agent-native task tracker; the coordination substrate the lattice-delegate skill writes to.
+- [**c11**](https://github.com/Stage-11-Agentics/c11). Native macOS terminal multiplexer.
+- [**Lattice**](https://github.com/Stage-11-Agentics/lattice). File-based agent-native task tracker.
 
 ────
 

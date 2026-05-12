@@ -1,6 +1,6 @@
 # Atin's Global CLAUDE.md — Example
 
-This is the global `~/.claude/CLAUDE.md` used by Atin Woodard, a Stage 11 operator. It loads into every Claude Code session on the machine and shapes how the agent interprets requests. We publish it as an example: study the patterns, copy what fits, replace what doesn't.
+This is the global `~/.claude/CLAUDE.md` used by Atin Woodard, a Stage 11 hyperengineer. It loads into every Claude Code session on the machine and shapes how the agent interprets requests. We publish it as an example: study the patterns, copy what fits, replace what doesn't.
 
 The headline pattern is **language overloading**: single-word triggers that invoke specific agent behaviors. The terminal-multiplexer specifics assume [c11](https://github.com/Stage-11-Agentics/c11), an open-source Stage 11 project. If you don't use it, ignore those sections.
 
